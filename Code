@@ -1,0 +1,34 @@
+class Graph:
+    def __init__(self, graph):
+        self.graph = graph
+
+    def depth_limited_search(self, start, goal, limit):
+        return self._dls_helper(start, goal, limit, [])
+
+    def _dls_helper(self, node, goal, limit, path):
+        path.append(node)
+
+        if node == goal:
+            return path
+
+        if limit <= 0:
+            return None
+
+        for neighbor in self.graph.get(node, []):
+            if neighbor not in path:
+                result = self._dls_helper(neighbor, goal, limit - 1, path.copy())
+                if result:
+                    return result
+        return None
+# Example graph representation
+graph_data = {
+    'A': ['B', 'C'],
+    'B': ['D', 'E'],
+    'C': ['F', 'G'],
+    'D': [],
+    'E': ['H'],
+    'F': [],
+    'G': [],
+    'H': []
+}
+graph = Graph(graph_data)
